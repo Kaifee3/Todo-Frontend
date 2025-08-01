@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./css/Profile.css";
+import "./CSS/Profile.css";
 
 const Profile = ({ user, onLogout }) => {
   const navigate = useNavigate();
