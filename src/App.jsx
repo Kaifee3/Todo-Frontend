@@ -24,8 +24,8 @@ function App() {
       const storedUser = localStorage.getItem('user');
 
       
-      console.log('🔍 Debug - Token:', token);
-      console.log('🔍 Debug - Stored User:', storedUser);
+      console.log('Debug - Token:', token);
+      console.log('Debug - Stored User:', storedUser);
       
       if (!token) {
         if (storedUser) {

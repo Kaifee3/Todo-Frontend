@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import "./CSS/History.css";
 const History = ({ user: passedUser }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-    const API_URL = import.meta.env.VITE_API_URL;
-
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const user = passedUser || JSON.parse(localStorage.getItem("user") || "null");
 
@@ -19,7 +18,7 @@ const History = ({ user: passedUser }) => {
     const fetchTasks = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/tasks/${user.email}`);
-        setTasks(res.data.reverse()); 
+        setTasks(res.data.reverse());
       } catch (err) {
         console.error("Error fetching tasks:", err);
       } finally {
@@ -31,23 +30,23 @@ const History = ({ user: passedUser }) => {
   }, [user?.email]);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Your Task History</h2>
+    <div className="history-container">
+      <h2 className="history-title">Your Task History</h2>
 
       {loading ? (
         <p>Loading...</p>
       ) : tasks.length === 0 ? (
         <p>No tasks found.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="task-list">
           {tasks.map((task) => (
-            <li key={task._id} className="bg-white p-4 rounded shadow">
-              <h3 className="text-lg font-semibold">{task.title}</h3>
-              <p className="text-gray-700 mb-1">{task.description}</p>
-              <p className="text-sm">
-                <strong>Status:</strong> <span className="italic">{task.status}</span>
+            <li key={task._id} className="task-card">
+              <h3>{task.title}</h3>
+              <p>{task.description}</p>
+              <p className="status">
+                <strong>Status:</strong> {task.status}
               </p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="timestamp">
                 <strong>Added on:</strong>{" "}
                 {task.createdAt
                   ? new Date(task.createdAt).toLocaleString("en-IN", {

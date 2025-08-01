@@ -1,0 +1,71 @@
+.add-task-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  background-color: #f9f9f9;
+  min-height: 60px;
+}
+
+.add-task-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  padding: 25px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.add-task-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.add-task-form input,
+.add-task-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.add-task-form textarea {
+  min-height: 100px;
+}
+
+.add-task-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-task-form button:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  .add-task-form {
+    padding: 20px 15px;
+  }
+
+  .add-task-form h2 {
+    font-size: 1.3rem;
+  }
+
+  .add-task-form input,
+  .add-task-form textarea {
+    font-size: 0.95rem;
+  }
+}

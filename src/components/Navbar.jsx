@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './css/Navbar.css';
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
-
-  console.log('🔍 Navbar Debug - User prop:', user);
-  console.log('🔍 Navbar Debug - User type:', typeof user);
-  console.log('🔍 Navbar Debug - User keys:', user ? Object.keys(user) : 'null');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     onLogout();
@@ -16,30 +14,33 @@ const Navbar = ({ user, onLogout }) => {
   const isLoggedIn = user && user.email && (user.firstName || user.email);
 
   return (
-    <nav style={{ backgroundColor: '#eee', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <Link to="/">Home</Link>
-      <Link to="/history">History</Link>
-      <Link to="/profile">Profile</Link>
-
-      {user?.role === 'admin' && (
-        <Link to="/admin">Admin Panel</Link>
-      )}
-
-      {isLoggedIn ? (
-        <>
-          <span style={{ marginLeft: 'auto' }}>
-            Welcome, {user.firstName || user.email}
-          </span>
-          <button onClick={handleLogout} style={{ marginLeft: '10px' }}>
-            Logout
+    <nav className="navbar">
+      <div className="navbar-row">
+        <div className="navbar-header">
+          <span className="navbar-logo">MyApp</span>
+          <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            &#9776;
           </button>
-        </>
-      ) : (
-        <div style={{ marginLeft: 'auto' }}>
-          <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
-          <Link to="/register">Register</Link>
         </div>
-      )}
+
+        <div className={`navbar-links ${menuOpen ? 'active' : ''}`}>
+          <Link to="/">Home</Link>
+          <Link to="/history">History</Link>
+          <Link to="/profile">Profile</Link>
+          {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
+          {isLoggedIn ? (
+            <>
+              <span className="navbar-welcome">Welcome, {user.firstName || user.email}</span>
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )}
+        </div>
+      </div>
     </nav>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './CSS/Adminpanel.css';
 
 function AdminPanel() {
   const [tasks, setTasks] = useState([]);
@@ -58,7 +59,6 @@ function AdminPanel() {
         await axios.delete(`${API_URL}/api/users/${id}`, { headers });
         fetchAllUsers();
       } catch (err) {
-        // fallback for alternative delete endpoint
         try {
           await axios.delete(`${API_URL}/api/users/delete-user`, {
             data: { userId: id },
@@ -95,7 +95,7 @@ function AdminPanel() {
         role
       } = editingUser;
 
-      const updateData = {
+      await axios.put(`${API_URL}/api/users/update-user`, {
         originalEmail,
         firstName,
         lastName,
@@ -103,9 +103,7 @@ function AdminPanel() {
         mobile,
         gender,
         role
-      };
-
-      await axios.put(`${API_URL}/api/users/update-user`, updateData, { headers });
+      }, { headers });
 
       setShowUserModal(false);
       setEditingUser(null);
@@ -136,106 +134,99 @@ function AdminPanel() {
   }, []);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
+    <div className="admin-panel">
+      <h2>Admin Panel</h2>
 
-      <div className="flex gap-4 mb-8">
+      <div className="toggle-buttons">
         <button
           onClick={() => setView('users')}
-          className={`px-4 py-2 rounded ${view === 'users' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          className={view === 'users' ? 'active' : 'inactive'}
         >
           Users
         </button>
         <button
           onClick={() => setView('tasks')}
-          className={`px-4 py-2 rounded ${view === 'tasks' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          className={view === 'tasks' ? 'active' : 'inactive'}
         >
           Tasks
         </button>
       </div>
 
-      {/* User Section */}
       {view === 'users' && (
         <div>
-          <h3 className="text-2xl font-semibold mb-4">Users</h3>
+          <h3>Users</h3>
           {users.map(user => (
-            <div key={user._id} className="p-4 border rounded bg-white shadow flex justify-between items-center">
-              <div>
+            <div key={user._id} className="card">
+              <div className="card-info">
                 <strong>{user.firstName} {user.lastName}</strong> - {user.email} ({user.role})
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => editUser(user)} className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
-                <button onClick={() => deleteUser(user._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+              <div className="card-actions">
+                <button onClick={() => editUser(user)} className="btn-edit">Edit</button>
+                <button onClick={() => deleteUser(user._id)} className="btn-delete">Delete</button>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Task Section */}
       {view === 'tasks' && (
         <div>
-          <h3 className="text-2xl font-semibold mb-4">Tasks</h3>
+          <h3>Tasks</h3>
           {tasks.map(task => (
-            <div key={task._id} className="border rounded p-4 bg-white shadow mb-4">
-              <div><strong>Task:</strong> {task.title}</div>
-              <div><strong>Description:</strong> {task.description}</div>
-              
-              <div><strong>Added By:</strong> {task.userId?.firstName} ({task.userId?.email})</div>
-              <div className="text-sm text-gray-500"><strong>Date:</strong> {new Date(task.createdAt).toLocaleString()}</div>
-              <div className="flex gap-2 mt-2">
-                <button onClick={() => editTask(task)} className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
-                <button onClick={() => deleteTask(task._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            <div key={task._id} className="card task-card">
+              <div className="task-detail"><strong>Task:</strong> {task.title}</div>
+              <div className="task-detail"><strong>Description:</strong> {task.description}</div>
+              <div className="task-detail"><strong>Added By:</strong> {task.userId?.firstName} ({task.userId?.email})</div>
+              <div className="task-date"><strong>Date:</strong> {new Date(task.createdAt).toLocaleString()}</div>
+              <div className="card-actions">
+                <button onClick={() => editTask(task)} className="btn-edit">Edit</button>
+                <button onClick={() => deleteTask(task._id)} className="btn-delete">Delete</button>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Edit User Modal */}
       {showUserModal && editingUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-xl font-bold mb-4">Edit User</h3>
-            <div className="space-y-3">
-              <input type="text" placeholder="First Name" value={editingUser.firstName} onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })} className="w-full p-2 border rounded" />
-              <input type="text" placeholder="Last Name" value={editingUser.lastName} onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })} className="w-full p-2 border rounded" />
-              <input type="email" placeholder="Email" value={editingUser.email} onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })} className="w-full p-2 border rounded" />
-              <input type="text" placeholder="Mobile" value={editingUser.mobile || ''} onChange={(e) => setEditingUser({ ...editingUser, mobile: e.target.value })} className="w-full p-2 border rounded" />
-              <select value={editingUser.gender || ''} onChange={(e) => setEditingUser({ ...editingUser, gender: e.target.value })} className="w-full p-2 border rounded">
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-              <select value={editingUser.role} onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })} className="w-full p-2 border rounded">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-            <div className="flex gap-2 mt-4">
-              <button onClick={handleUserUpdate} className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-              <button onClick={() => { setShowUserModal(false); setEditingUser(null); }} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Edit User</h3>
+            <input type="text" placeholder="First Name" value={editingUser.firstName} onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })} />
+            <input type="text" placeholder="Last Name" value={editingUser.lastName} onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })} />
+            <input type="email" placeholder="Email" value={editingUser.email} onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })} />
+            <input type="text" placeholder="Mobile" value={editingUser.mobile || ''} onChange={(e) => setEditingUser({ ...editingUser, mobile: e.target.value })} />
+            <select value={editingUser.gender || ''} onChange={(e) => setEditingUser({ ...editingUser, gender: e.target.value })}>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <select value={editingUser.role} onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            <div className="modal-buttons">
+              <button onClick={handleUserUpdate} className="btn-update">Update</button>
+              <button onClick={() => { setShowUserModal(false); setEditingUser(null); }} className="btn-cancel">Cancel</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Edit Task Modal */}
       {showTaskModal && editingTask && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-xl font-bold mb-4">Edit Task</h3>
-            <input type="text" placeholder="Title" value={editingTask.title} onChange={(e) => setEditingTask({ ...editingTask, title: e.target.value })} className="w-full p-2 border rounded mb-2" />
-            <textarea placeholder="Description" value={editingTask.description} onChange={(e) => setEditingTask({ ...editingTask, description: e.target.value })} className="w-full p-2 border rounded mb-2" />
-            <select value={editingTask.status} onChange={(e) => setEditingTask({ ...editingTask, status: e.target.value })} className="w-full p-2 border rounded mb-4">
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Edit Task</h3>
+            <input type="text" placeholder="Title" value={editingTask.title} onChange={(e) => setEditingTask({ ...editingTask, title: e.target.value })} />
+            <textarea placeholder="Description" value={editingTask.description} onChange={(e) => setEditingTask({ ...editingTask, description: e.target.value })} />
+            <select value={editingTask.status} onChange={(e) => setEditingTask({ ...editingTask, status: e.target.value })}>
               <option>Pending</option>
               <option>Confirmed</option>
               <option>Completed</option>
             </select>
-            <div className="flex gap-2">
-              <button onClick={handleTaskUpdate} className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-              <button onClick={() => { setShowTaskModal(false); setEditingTask(null); }} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+            <div className="modal-buttons">
+              <button onClick={handleTaskUpdate} className="btn-update">Update</button>
+              <button onClick={() => { setShowTaskModal(false); setEditingTask(null); }} className="btn-cancel">Cancel</button>
             </div>
           </div>
         </div>

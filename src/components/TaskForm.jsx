@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import './css/TaskForm.css'; 
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
@@ -20,21 +21,22 @@ const AddTask = () => {
         title,
         description,
         email: user.email,
-        userId: user.id, // optional for admin features
+        userId: user.id, 
       });
 
-      console.log("✅ Task created:", response.data);
+      console.log("Task created:", response.data);
       alert("Task added successfully!");
       setTitle("");
       setDescription("");
     } catch (err) {
-      console.error("❌ Failed to create task:", err);
+      console.error("Failed to create task:", err);
       alert("Something went wrong while adding task.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+  <div className="add-task-container">
+    <form onSubmit={handleSubmit} className="add-task-form">
       <h2>Add New Task</h2>
       <input
         type="text"
@@ -43,16 +45,15 @@ const AddTask = () => {
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-      <br />
       <textarea
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       ></textarea>
-      <br />
       <button type="submit">Add Task</button>
     </form>
-  );
+  </div>
+);
 };
 
 export default AddTask;

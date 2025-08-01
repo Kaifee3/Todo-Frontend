@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./css/Profile.css";
 
 const Profile = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -16,8 +17,7 @@ const Profile = ({ user, onLogout }) => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-    const API_URL = import.meta.env.VITE_API_URL;
-
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const getUserDetails = async () => {
     if (user?.email) {
@@ -62,7 +62,7 @@ const Profile = ({ user, onLogout }) => {
 
     try {
       const updateData = {
-        _id: profileData._id, // required for the backend to locate user
+        _id: profileData._id,
         firstName: profileData.firstName,
         lastName: profileData.lastName,
         mobile: profileData.mobile,
@@ -101,36 +101,32 @@ const Profile = ({ user, onLogout }) => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+    <div className="profile-container">
       <h2>Profile</h2>
 
-      <div style={{ marginBottom: '20px' }}>
+      <div className="profile-form">
         <input
           name="firstName"
           value={profileData.firstName}
           onChange={handleChange}
           placeholder="First Name"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
         <input
           name="lastName"
           value={profileData.lastName}
           onChange={handleChange}
           placeholder="Last Name"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
         <input
           name="mobile"
           value={profileData.mobile}
           onChange={handleChange}
           placeholder="Mobile"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
         <select
           name="gender"
           value={profileData.gender}
           onChange={handleChange}
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         >
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
@@ -144,7 +140,6 @@ const Profile = ({ user, onLogout }) => {
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
           placeholder="Email"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
 
         <input
@@ -153,7 +148,6 @@ const Profile = ({ user, onLogout }) => {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           placeholder="New Password (leave blank to keep current)"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
 
         <input
@@ -162,39 +156,23 @@ const Profile = ({ user, onLogout }) => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm New Password"
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
+      </div>
 
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            onClick={handleUpdate}
-            disabled={!isChanged}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: isChanged ? '#007bff' : '#6c757d',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: isChanged ? 'pointer' : 'not-allowed'
-            }}
-          >
-            Update Profile
-          </button>
-
-          <button
-            onClick={handleLogout}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#dc3545',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            Logout
-          </button>
-        </div>
+      <div className="profile-actions">
+        <button
+          onClick={handleUpdate}
+          disabled={!isChanged}
+          className="update-btn"
+        >
+          Update Profile
+        </button>
+        <button
+          onClick={handleLogout}
+          className="logout-btn"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
