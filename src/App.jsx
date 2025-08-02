@@ -12,7 +12,12 @@ import Footer from './components/Footer';
 import './App.css'; 
 
 const ProtectedRoute = ({ children, user }) => {
-  return user ? <Navigate to="/" replace /> : children;
+  return user ? children : <Navigate to="/login" replace />;
+};
+
+const PublicRoute = ({ children, user }) => {
+  // Allow access to login and register pages even when logged in
+  return children;
 };
 
 function App() {
@@ -38,7 +43,7 @@ function App() {
       }
 
       try {
-        const response = await axios.get(`${API_URL}/api/auth/me`, {
+        const response = await axios.get(`${API_URL}/api/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -64,10 +69,39 @@ function App() {
     fetchUser();
   }, []);
 
+  // Listen for storage changes (when user logs in from another tab)
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'user' || e.key === 'token') {
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+        
+        if (token && storedUser) {
+          try {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+          } catch (err) {
+            console.error('Error parsing stored user:', err);
+            setUser(null);
+          }
+        } else {
+          setUser(null);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+  };
+
+  const handleLogin = (userData) => {
+    setUser(userData);
   };
 
   return (
@@ -79,22 +113,22 @@ function App() {
           <Route
             path="/register"
             element={
-              <ProtectedRoute user={user}>
+              <PublicRoute user={user}>
                 <Register />
-              </ProtectedRoute>
+              </PublicRoute>
             }
           />
           <Route
             path="/login"
             element={
-              <ProtectedRoute user={user}>
-                <Login />
-              </ProtectedRoute>
+              <PublicRoute user={user}>
+                <Login onLogin={handleLogin} />
+              </PublicRoute>
             }
           />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/history" element={<History user={user} />} />
-          <Route path="/profile" element={<Profile user={user} onLogout={handleLogout} />} />
+          <Route path="/admin" element={<ProtectedRoute user={user}><AdminPanel /></ProtectedRoute>} />
+          <Route path="/history" element={<History user={user} />}/>
+          <Route path="/profile" element={<Profile user={user}/>}/>
         </Routes>
       </div>
       <Footer />

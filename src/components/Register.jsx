@@ -42,6 +42,7 @@ function Register() {
         <h2 className="form-title">Register</h2>
 
         <input
+          id="firstName"
           type="text"
           name="firstName"
           placeholder="First Name"
@@ -50,6 +51,7 @@ function Register() {
         />
 
         <input
+          id="lastName"
           type="text"
           name="lastName"
           placeholder="Last Name"
@@ -58,6 +60,7 @@ function Register() {
         />
 
         <input
+          id="email"
           type="email"
           name="email"
           placeholder="Email"
@@ -66,6 +69,7 @@ function Register() {
         />
 
         <input
+          id="mobile"
           type="text"
           name="mobile"
           placeholder="Mobile"
@@ -73,13 +77,14 @@ function Register() {
           required
         />
 
-        <select name="gender" onChange={handleChange} required>
+        <select id="gender" name="gender" onChange={handleChange} required>
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
 
         <input
+          id="password"
           type="password"
           name="password"
           placeholder="Password"
@@ -88,6 +93,7 @@ function Register() {
         />
 
         <input
+          id="confirmPassword"
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"

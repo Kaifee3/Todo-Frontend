@@ -1,108 +1,138 @@
-/* Navbar Container */
-.navbar {
-  background-color: #f3f3f3;
-  padding: 0;
-  margin: 0;
-  font-family: sans-serif;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+:root {
+  --primary-color: #4f46e5;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --text-color: #f3f4f6;
+  --background: #1f2937;
+  --hover-bg: #374151;
+  --font-family: 'Segoe UI', sans-serif;
 }
 
-/* Inner wrapper */
-/* Inner wrapper */
+.navbar {
+  background-color: var(--background);
+  color: var(--text-color);
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 .navbar-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
+  padding: 16px 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* Header wrapper (for logo + hamburger) */
 .navbar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
-
-/* Logo */
 .navbar-logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #222;
-  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
+.navbar-logo:hover {
+  color: #6366f1;
+}
 
-
-/* Hamburger (mobile) */
 .hamburger {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 28px;
+  color: #ffffff;
   cursor: pointer;
   display: none;
-  color: #333;
+  padding: 8px;
+  margin-left: auto;
+  margin-right: 4px;
 }
 
-/* Nav links */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .navbar-links a {
   text-decoration: none;
-  color: #333;
-  padding: 8px 10px;
-  font-size: 0.95rem;
-  border-radius: 4px;
+  color: var(--text-color);
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 6px;
   transition: background-color 0.2s ease;
 }
 
 .navbar-links a:hover {
-  background-color: #ddd;
+  background-color: var(--hover-bg);
 }
 
-/* Welcome text */
-.navbar-welcome {
-  font-weight: 500;
-  color: #444;
-}
 .navbar-welcome-container {
   display: flex;
   align-items: center;
-  gap: 4px; /* or more if you want spacing between 'Welcome,' and name */
+  gap: 6px;
+  font-weight: 500;
+  color: var(--text-color);
 }
 
-/* Logout Button */
-.navbar button.logout-btn {
-  background-color: #ef4444;
+.logout-button {
+  background-color: var(--danger-color);
   color: white;
   border: none;
-  padding: 8px 14px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navbar button.logout-btn:hover {
-  background-color: #dc2626;
+.logout-button:hover {
+  background-color: var(--danger-hover);
+  transform: translateY(-2px);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+.logout-button:focus {
+  outline: 2px solid var(--danger-hover);
+  outline-offset: 2px;
+}
+
+.logout-button:active {
+  background-color: #b91c1c;
+  transform: scale(0.97);
+}
+
+@media (max-width: 768px) {
   .hamburger {
     display: block;
+  }
+
+  .navbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 16px;
   }
 
   .navbar-links {
     display: none;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 6px;
   }
 
   .navbar-links.active {
@@ -110,15 +140,10 @@
   }
 
   .navbar-links a,
-  .navbar-links button.logout-btn {
+  .logout-button {
     width: 100%;
     text-align: left;
     padding: 12px 16px;
-  }
-
-  .navbar-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    font-size: 1rem;
   }
 }

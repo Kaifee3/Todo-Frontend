@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CSS/History.css";
+
 const History = ({ user: passedUser }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
   const user = passedUser || JSON.parse(localStorage.getItem("user") || "null");
 
   useEffect(() => {
     if (!user?.email) {
-      console.warn("User email not found");
       setLoading(false);
       return;
     }
@@ -29,10 +31,27 @@ const History = ({ user: passedUser }) => {
     fetchTasks();
   }, [user?.email]);
 
+  // ⛔ Not logged in → show login prompt
+  if (!user?.email) {
+    return (
+      <div className="history-container">
+        <h2 className="history-title">Task History</h2>
+        <div className="login-box">
+          <p className="login-required">
+            You need to be logged in to view your task history.
+          </p>
+          <button className="login-link" onClick={() => navigate("/login")}>
+            Click here to login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ Logged in → show tasks
   return (
     <div className="history-container">
       <h2 className="history-title">Your Task History</h2>
-
       {loading ? (
         <p>Loading...</p>
       ) : tasks.length === 0 ? (

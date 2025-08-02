@@ -121,6 +121,74 @@ button.text-gray-500:hover {
   color: #1e293b;
 }
 
+.slideshow {
+  width: 100%;
+  max-width: 900px;
+  height: 300px;
+  margin: 2rem auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fade 0.5s ease-in-out;
+}
+
+.slide.active {
+  display: block;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.not-logged-in {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.not-logged-in h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  color: black;
+}
+
+.not-logged-in p {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.login-button,
+.register-button {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-color: #4338ca;
+}
+
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .home-container {

@@ -42,6 +42,7 @@ const TaskForm = ({ user, addTaskToList }) => {
       <form onSubmit={handleSubmit} className="add-task-form">
         <h2>Add New Task</h2>
         <input
+          id="taskTitle"
           type="text"
           placeholder="Title"
           value={title}
@@ -49,6 +50,7 @@ const TaskForm = ({ user, addTaskToList }) => {
           required
         />
         <textarea
+          id="taskDescription"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

@@ -13,6 +13,80 @@
   text-align: center;
 }
 
+
+
+/* 🔽 Filter Section */
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-container label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.filter-container select {
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.login-box {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.login-required {
+  font-size: 1.1rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.login-link {
+  background-color: #4f46e5;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: #4338ca;
+}
+
+
+.save-btn {
+  padding: 6px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+  background-color: #388e3c;
+}
+
+/* 🔽 Task List Styles */
 .task-list {
   display: flex;
   flex-direction: column;
@@ -55,7 +129,7 @@
   margin-top: 6px;
 }
 
-/* Responsive Styles */
+/* 🔽 Responsive Styles */
 @media (max-width: 768px) {
   .history-title {
     font-size: 1.5rem;
@@ -72,6 +146,11 @@
   .task-card p {
     font-size: 0.9rem;
   }
+
+  .filter-container {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -85,5 +164,15 @@
 
   .history-title {
     font-size: 1.3rem;
+  }
+
+  .filter-container label {
+    font-size: 15px;
+  }
+
+  .filter-container select,
+  .save-btn {
+    width: 100%;
+    max-width: 250px;
   }
 }

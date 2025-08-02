@@ -42,14 +42,13 @@ const Profile = ({ user, onLogout }) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
   };
 
-  const isChanged = (
-    profileData.firstName !== user.firstName ||
-    profileData.lastName !== user.lastName ||
-    profileData.mobile !== user.mobile ||
-    profileData.gender !== user.gender ||
+  const isChanged =
+    profileData.firstName !== user?.firstName ||
+    profileData.lastName !== user?.lastName ||
+    profileData.mobile !== user?.mobile ||
+    profileData.gender !== user?.gender ||
     newEmail !== originalEmail ||
-    newPassword
-  );
+    newPassword;
 
   const handleUpdate = async () => {
     if (!newEmail.trim()) {
@@ -100,30 +99,46 @@ const Profile = ({ user, onLogout }) => {
     navigate("/login");
   };
 
+  if (!user || !user.email) {
+    return (
+      <div className="profile-container">
+        <h2>Unauthorized</h2>
+        <p>You must be logged in to view this page.</p>
+        <button className="login-redirect-btn" onClick={() => navigate("/login")}>
+          Click here to Login
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="profile-container">
       <h2>Profile</h2>
 
       <div className="profile-form">
         <input
+          id="firstName"
           name="firstName"
           value={profileData.firstName}
           onChange={handleChange}
           placeholder="First Name"
         />
         <input
+          id="lastName"
           name="lastName"
           value={profileData.lastName}
           onChange={handleChange}
           placeholder="Last Name"
         />
         <input
+          id="mobile"
           name="mobile"
           value={profileData.mobile}
           onChange={handleChange}
           placeholder="Mobile"
         />
         <select
+          id="gender"
           name="gender"
           value={profileData.gender}
           onChange={handleChange}
@@ -135,6 +150,7 @@ const Profile = ({ user, onLogout }) => {
         </select>
 
         <input
+          id="email"
           name="email"
           type="email"
           value={newEmail}
@@ -143,6 +159,7 @@ const Profile = ({ user, onLogout }) => {
         />
 
         <input
+          id="newPassword"
           name="newPassword"
           type="password"
           value={newPassword}
@@ -151,6 +168,7 @@ const Profile = ({ user, onLogout }) => {
         />
 
         <input
+          id="confirmPassword"
           name="confirmPassword"
           type="password"
           value={confirmPassword}

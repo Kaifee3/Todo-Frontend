@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './CSS/Login.css';
 
-function Login() {
+function Login({ onLogin = null }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,12 +22,19 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
 
-      // ✅ Redirect after login
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/", { replace: true }); // Redirect to Home.jsx
+      // ✅ Update user state immediately
+      if (onLogin) {
+        onLogin(user);
       }
+
+      // ✅ Small delay to ensure state is updated before navigation
+      setTimeout(() => {
+        if (user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/", { replace: true }); // Redirect to Home.jsx
+        }
+      }, 100);
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     }
