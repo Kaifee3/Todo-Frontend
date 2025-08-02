@@ -1,21 +1,21 @@
 /* General container */
 .admin-panel {
-  padding: 2rem;
-  max-width: 80%;
+  padding: 1rem;
+  max-width: 90%;
   margin: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Heading styles */
 .admin-panel h2 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   color: #1f2937;
 }
 
 .admin-panel h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
   color: #374151;
@@ -24,8 +24,9 @@
 /* Toggle buttons */
 .toggle-buttons {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .toggle-buttons button {
@@ -35,6 +36,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s;
+  flex: 1 1 100%;
 }
 
 .toggle-buttons button.active {
@@ -55,17 +57,42 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .card-info {
-  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
+.task-detail {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.task-detail span {
+  display: inline-block;
+  min-width: 90px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.task-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Buttons */
 .card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .card-actions button {
@@ -89,18 +116,6 @@
   background-color: #ef4444;
 }
 
-/* Task details */
-.task-detail {
-  margin: 0.25rem 0;
-  color: #4b5563;
-  font-size: 0.95rem;
-}
-
-.task-date {
-  font-size: 0.85rem;
-  color: #6b7280;
-}
-
 /* Modal styles */
 .modal-overlay {
   position: fixed;
@@ -117,10 +132,10 @@
 
 .modal-content {
   background: #ffffff;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 0.5rem;
-  width: 22rem;
-  max-width: 90%;
+  width: 90%;
+  max-width: 22rem;
 }
 
 .modal-content h3 {
@@ -143,8 +158,8 @@
 
 .modal-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .modal-buttons button {
@@ -153,6 +168,7 @@
   color: #fff;
   font-weight: 500;
   cursor: pointer;
+  width: 100%;
 }
 
 .modal-buttons .btn-update {
@@ -161,4 +177,37 @@
 
 .modal-buttons .btn-cancel {
   background-color: #6b7280;
+}
+
+/* Responsive styles */
+@media (min-width: 600px) {
+  .card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-info {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .card-actions {
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .modal-buttons {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .modal-buttons button {
+    width: auto;
+    flex: 1;
+  }
+
+  .toggle-buttons button {
+    flex: 1 1 auto;
+  }
 }

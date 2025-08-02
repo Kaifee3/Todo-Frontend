@@ -8,7 +8,8 @@ import Home from './pages/Home.jsx';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import History from './pages/History';
-import './App.css'; // 📦 Add global styles here
+import Footer from './components/Footer';
+import './App.css'; 
 
 const ProtectedRoute = ({ children, user }) => {
   return user ? <Navigate to="/" replace /> : children;
@@ -96,6 +97,7 @@ function App() {
           <Route path="/profile" element={<Profile user={user} onLogout={handleLogout} />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

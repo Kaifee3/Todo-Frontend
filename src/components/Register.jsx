@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './CSS/Register.css';
 
 function Register() {
@@ -18,7 +18,7 @@ function Register() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleRegister = async (e) => {
@@ -40,18 +40,67 @@ function Register() {
     <div className="register-container">
       <form className="register-form" onSubmit={handleRegister}>
         <h2 className="form-title">Register</h2>
-        <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
-        <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input type="text" name="mobile" placeholder="Mobile" onChange={handleChange} required />
+
+        <input
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="mobile"
+          placeholder="Mobile"
+          onChange={handleChange}
+          required
+        />
+
         <select name="gender" onChange={handleChange} required>
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          required
+        />
+
         <button type="submit">Register</button>
+
+        {/* ✅ Login redirect link */}
+        <p className="login-redirect">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </form>
     </div>
   );

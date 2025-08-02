@@ -173,11 +173,13 @@ function AdminPanel() {
         <div>
           <h3>Tasks</h3>
           {tasks.map(task => (
-            <div key={task._id} className="card task-card">
-              <div className="task-detail"><strong>Task:</strong> {task.title}</div>
-              <div className="task-detail"><strong>Description:</strong> {task.description}</div>
-              <div className="task-detail"><strong>Added By:</strong> {task.userId?.firstName} ({task.userId?.email})</div>
-              <div className="task-date"><strong>Date:</strong> {new Date(task.createdAt).toLocaleString()}</div>
+            <div key={task._id} className="card">
+              <div className="card-info">
+                <div className="task-detail"><span>Task:</span> {task.title}</div>
+                <div className="task-detail"><span>Description:</span> {task.description}</div>
+                <div className="task-detail"><span>Added By:</span> {task.userId?.firstName} ({task.userId?.email})</div>
+                <div className="task-detail"><span>Date:</span> {new Date(task.createdAt).toLocaleString()}</div>
+              </div>
               <div className="card-actions">
                 <button onClick={() => editTask(task)} className="btn-edit">Edit</button>
                 <button onClick={() => deleteTask(task._id)} className="btn-delete">Delete</button>

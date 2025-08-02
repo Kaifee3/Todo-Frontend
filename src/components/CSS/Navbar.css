@@ -8,12 +8,22 @@
 }
 
 /* Inner wrapper */
+/* Inner wrapper */
 .navbar-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 24px;
 }
+
+/* Header wrapper (for logo + hamburger) */
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 
 /* Logo */
 .navbar-logo {
@@ -22,6 +32,8 @@
   color: #222;
   margin: 0;
 }
+
+
 
 /* Hamburger (mobile) */
 .hamburger {
@@ -57,6 +69,11 @@
 .navbar-welcome {
   font-weight: 500;
   color: #444;
+}
+.navbar-welcome-container {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* or more if you want spacing between 'Welcome,' and name */
 }
 
 /* Logout Button */

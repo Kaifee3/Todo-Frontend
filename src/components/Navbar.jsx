@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './CSS/Navbar.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./CSS/Navbar.css";
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ const Navbar = ({ user, onLogout }) => {
 
   const handleLogout = () => {
     onLogout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const isLoggedIn = user && user.email && (user.firstName || user.email);
@@ -23,16 +23,16 @@ const Navbar = ({ user, onLogout }) => {
           </button>
         </div>
 
-        <div className={`navbar-links ${menuOpen ? 'active' : ''}`}>
+        <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
           <Link to="/">Home</Link>
           <Link to="/history">History</Link>
           <Link to="/profile">Profile</Link>
-          {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
+          {user?.role === "admin" && <Link to="/admin">Admin</Link>}
           {isLoggedIn ? (
-            <>
-              <span className="navbar-welcome">Welcome, {user.firstName || user.email}</span>
-              <button className="logout-btn" onClick={handleLogout}>Logout</button>
-            </>
+            <div className="navbar-welcome-container">
+              <span className="navbar-welcome">Welcome,</span>
+              <span className="navbar-welcome">{user.firstName}</span>
+            </div>
           ) : (
             <>
               <Link to="/login">Login</Link>

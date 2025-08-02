@@ -1,71 +1,98 @@
+/* Add Task Section Container */
 .add-task-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 20px;
-  background-color: #f9f9f9;
+  padding: 40px 20px;
+  background: linear-gradient(to right, #e0f2fe, #f0f9ff); /* Light blue gradient */
   min-height: 60px;
 }
 
+/* Form Box */
 .add-task-form {
   width: 100%;
-  max-width: 500px;
-  background-color: #fff;
-  padding: 25px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 520px;
+  background-color: #ffffff;
+  padding: 28px 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.add-task-form:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .add-task-form h2 {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #222;
+  margin-bottom: 22px;
+  font-size: 1.6rem;
+  color: #1e3a8a;
+  font-weight: 600;
 }
 
+/* Input & Textarea Fields */
 .add-task-form input,
 .add-task-form textarea {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
   font-size: 1rem;
-  resize: vertical;
+  background-color: #f8fafc;
+  color: #0f172a;
   box-sizing: border-box;
 }
 
-.add-task-form textarea {
-  min-height: 100px;
+.add-task-form input:focus,
+.add-task-form textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
+.add-task-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Submit Button */
 .add-task-form button {
   width: 100%;
   padding: 12px;
-  background-color: #2563eb;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.25s ease;
 }
 
 .add-task-form button:hover {
-  background-color: #1d4ed8;
+  background-color: #2563eb;
 }
 
+/* Responsive Adjustments */
 @media (max-width: 600px) {
   .add-task-form {
-    padding: 20px 15px;
+    padding: 20px 16px;
   }
 
   .add-task-form h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   .add-task-form input,
   .add-task-form textarea {
     font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .add-task-form button {
+    font-size: 0.95rem;
+    padding: 10px;
   }
 }
