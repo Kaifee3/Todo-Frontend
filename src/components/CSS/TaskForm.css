@@ -3,96 +3,115 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  background: linear-gradient(to right, #e0f2fe, #f0f9ff); /* Light blue gradient */
-  min-height: 60px;
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #e0f7fa, #f0faff, #e8f5e9);
+  min-height: 65vh;
+  box-sizing: border-box;
+  border-radius: 10px;
 }
 
 /* Form Box */
 .add-task-form {
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   background-color: #ffffff;
-  padding: 28px 24px;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.3s ease;
+  padding: 32px 28px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.6s ease both;
 }
 
 .add-task-form:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .add-task-form h2 {
   text-align: center;
-  margin-bottom: 22px;
-  font-size: 1.6rem;
-  color: #1e3a8a;
-  font-weight: 600;
+  margin-bottom: 24px;
+  font-size: 1.75rem;
+  color: #1d4ed8;
+  font-weight: 700;
 }
 
 /* Input & Textarea Fields */
 .add-task-form input,
 .add-task-form textarea {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 16px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
   border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: #f9fafb;
+  color: #1e293b;
+  transition: all 0.25s ease;
   box-sizing: border-box;
 }
 
 .add-task-form input:focus,
 .add-task-form textarea:focus {
   border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .add-task-form textarea {
-  min-height: 110px;
+  min-height: 120px;
   resize: vertical;
 }
 
 /* Submit Button */
 .add-task-form button {
   width: 100%;
-  padding: 12px;
-  background-color: #3b82f6;
-  color: white;
+  padding: 14px;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .add-task-form button:hover {
-  background-color: #2563eb;
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  transform: scale(1.02);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
   .add-task-form {
-    padding: 20px 16px;
+    padding: 24px 18px;
   }
 
   .add-task-form h2 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .add-task-form input,
   .add-task-form textarea {
     font-size: 0.95rem;
-    padding: 10px 12px;
+    padding: 12px 14px;
   }
 
   .add-task-form button {
     font-size: 0.95rem;
-    padding: 10px;
+    padding: 12px;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

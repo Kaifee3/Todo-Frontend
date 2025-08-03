@@ -1,44 +1,90 @@
 .footer {
-  background-color: #19d56b;
-  padding: 1rem 2rem;
-  border-top: 1px solid #e5e7eb;
-  font-size: 0.9rem;
-  color: #000000;
-  position: relative;
-  bottom: 0;
+  background: linear-gradient(135deg, #8b5cf6, #f97316, #10b981);
+  background-size: 300% 300%;
+  animation: footerGradientFlow 20s ease infinite;
+
+  padding: 2rem 1.5rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
+  color: #ffffff;
   width: 100%;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+@keyframes footerGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .footer-content {
-  max-width: 960px;
+  max-width: 1140px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
   text-align: center;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  white-space: nowrap;
 }
 
 .footer-links {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
 }
 
 .footer-links a {
-  color: #000000;
+  color: #fefce8;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
 }
 
 .footer-links a:hover {
-  color: #1d4ed8;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
-@media (min-width: 600px) {
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.footer-socials a {
+  color: #ffffff;
+  font-size: 1.25rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-socials a:hover {
+  color: #fef08a;
+  transform: scale(1.15);
+}
+
+.footer-bottom {
+  font-size: 0.8rem;
+  color: #e7f5ff;
+  margin-top: 1rem;
+}
+
+/* Responsive stacking on small screens */
+@media (max-width: 639px) {
   .footer-content {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }

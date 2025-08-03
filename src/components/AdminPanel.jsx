@@ -177,6 +177,7 @@ function AdminPanel() {
               <div className="card-info">
                 <div className="task-detail"><span>Task:</span> {task.title}</div>
                 <div className="task-detail"><span>Description:</span> {task.description}</div>
+                <div className="task-detail"><span>Status:</span> {task.status}</div> {/* 👈 Added */}
                 <div className="task-detail"><span>Added By:</span> {task.userId?.firstName} ({task.userId?.email})</div>
                 <div className="task-detail"><span>Date:</span> {new Date(task.createdAt).toLocaleString()}</div>
               </div>

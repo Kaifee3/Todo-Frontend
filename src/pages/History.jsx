@@ -6,6 +6,7 @@ import "./CSS/History.css";
 const History = ({ user: passedUser }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [statusChanges, setStatusChanges] = useState({});
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -31,7 +32,31 @@ const History = ({ user: passedUser }) => {
     fetchTasks();
   }, [user?.email]);
 
-  // ⛔ Not logged in → show login prompt
+  const handleStatusChange = (taskId, newStatus) => {
+    setStatusChanges((prev) => ({ ...prev, [taskId]: newStatus }));
+  };
+
+  const handleSaveStatus = async (taskId) => {
+    const newStatus = statusChanges[taskId];
+    if (!newStatus) return;
+
+    try {
+      await axios.put(`${API_URL}/api/tasks/${taskId}`, { status: newStatus });
+      setTasks((prev) =>
+        prev.map((task) =>
+          task._id === taskId ? { ...task, status: newStatus } : task
+        )
+      );
+      setStatusChanges((prev) => {
+        const updated = { ...prev };
+        delete updated[taskId];
+        return updated;
+      });
+    } catch (err) {
+      console.error("Error updating task status:", err);
+    }
+  };
+
   if (!user?.email) {
     return (
       <div className="history-container">
@@ -48,7 +73,6 @@ const History = ({ user: passedUser }) => {
     );
   }
 
-  // ✅ Logged in → show tasks
   return (
     <div className="history-container">
       <h2 className="history-title">Your Task History</h2>
@@ -62,9 +86,31 @@ const History = ({ user: passedUser }) => {
             <li key={task._id} className="task-card">
               <h3>{task.title}</h3>
               <p>{task.description}</p>
-              <p className="status">
-                <strong>Status:</strong> {task.status}
-              </p>
+
+              <div className="status-select">
+                <label>
+                  <strong>Status:</strong>{" "}
+                  <select
+                    value={statusChanges[task._id] || task.status}
+                    onChange={(e) =>
+                      handleStatusChange(task._id, e.target.value)
+                    }
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </label>
+                {statusChanges[task._id] && (
+                  <button
+                    className="save-status-btn"
+                    onClick={() => handleSaveStatus(task._id)}
+                  >
+                    Save
+                  </button>
+                )}
+              </div>
+
               <p className="timestamp">
                 <strong>Added on:</strong>{" "}
                 {task.createdAt

@@ -1,80 +1,128 @@
+/* Register Page Background with Smooth 5-Color Animation */
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px 20px;
-  background-color: #f7f7f7;
-  min-height: 80vh;
+  min-height: 100vh;
+  background: linear-gradient(135deg,
+    #e0f7fa,
+    #d1fae5,
+    #fef9c3,
+    #fce7f3,
+    #e0f2fe
+  );
+  background-size: 400% 400%;
+  animation: gradientSlide 15s ease infinite;
 }
 
+@keyframes gradientSlide {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Form Card - Glass Effect */
 .register-form {
   width: 100%;
-  max-width: 400px;
-  background-color: #fff;
-  padding: 25px 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  padding: 30px 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease;
 }
 
+.register-form:hover {
+  transform: translateY(-4px);
+}
+
+/* Title */
+.form-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+/* Inputs and Selects */
+.register-form input,
+.register-form select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+/* Submit Button */
+.register-form button {
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.register-form button:hover {
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+}
+
+.register-form button:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Redirect Link */
 .login-redirect {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.95rem;
-  color: #4b5563;
+  color: #6b7280;
 }
 
 .login-redirect a {
   color: #3b82f6;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
 .login-redirect a:hover {
   text-decoration: underline;
+  color: #1d4ed8;
 }
 
-
-.form-title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.register-form input,
-.register-form select {
-  width: 100%;
-  padding: 12px 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-
-.register-form button {
-  width: 100%;
-  padding: 12px;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.register-form button:hover {
-  background-color: #1d4ed8;
-}
-
+/* Mobile Responsiveness */
 @media (max-width: 500px) {
   .register-form {
-    padding: 20px 15px;
+    padding: 24px 18px;
   }
 
   .form-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 
   .register-form input,
