@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./CSS/Home.css";
+import { Link } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
 
 const Home = ({ user: passedUser }) => {
@@ -94,7 +95,6 @@ const Home = ({ user: passedUser }) => {
 
   return (
     <div className="home-container">
-      {/* Slideshow always visible */}
       <div className="slideshow">
         {slideImages.map((src, index) => (
           <img
@@ -110,8 +110,8 @@ const Home = ({ user: passedUser }) => {
         <div className="not-logged-in">
           <h2>Welcome to Task Manager</h2>
           <p>Please log in to view and manage your tasks.</p>
-          <a href="/login" className="login-button">Login</a>
-          <a href="/register" className="register-button">Register</a>
+          <Link to="/login" className="login-button">Login</Link>
+          <Link to="/register" className="register-button">Register</Link>
         </div>
       ) : (
         <>
