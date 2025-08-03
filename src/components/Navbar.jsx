@@ -18,8 +18,13 @@ const Navbar = ({ user, onLogout }) => {
       <div className="navbar-row">
         <div className="navbar-header">
           <Link to="/" className="navbar-logo">
-            MyApp
+            <img
+              src="/images/logo.png"
+              alt="Logo"
+              className="navbar-logo-img"
+            />
           </Link>
+
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
             &#9776;
           </button>
