@@ -43,17 +43,20 @@ function AdminPanel() {
   };
 
   const deleteTask = async (id) => {
+    if (!id) return alert("Invalid task ID");
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
         await axios.delete(`${API_URL}/api/tasks/${id}`, { headers });
         fetchAllTasks();
       } catch (err) {
         console.error("Error deleting task:", err);
+        alert("Error deleting task: " + (err.response?.data?.message || err.message));
       }
     }
   };
 
   const deleteUser = async (id) => {
+    if (!id) return alert("Invalid user ID");
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
         await axios.delete(`${API_URL}/api/users/${id}`, { headers });
@@ -62,7 +65,7 @@ function AdminPanel() {
         try {
           await axios.delete(`${API_URL}/api/users/delete-user`, {
             data: { userId: id },
-            headers
+            headers,
           });
           fetchAllUsers();
         } catch (error) {
@@ -85,24 +88,10 @@ function AdminPanel() {
 
   const handleUserUpdate = async () => {
     try {
-      const {
-        originalEmail,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        gender,
-        role
-      } = editingUser;
+      const { originalEmail, firstName, lastName, email, mobile, gender, role } = editingUser;
 
       await axios.put(`${API_URL}/api/users/update-user`, {
-        originalEmail,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        gender,
-        role
+        originalEmail, firstName, lastName, email, mobile, gender, role
       }, { headers });
 
       setShowUserModal(false);
@@ -177,7 +166,7 @@ function AdminPanel() {
               <div className="card-info">
                 <div className="task-detail"><span>Task:</span> {task.title}</div>
                 <div className="task-detail"><span>Description:</span> {task.description}</div>
-                <div className="task-detail"><span>Status:</span> {task.status}</div> {/* 👈 Added */}
+                <div className="task-detail"><span>Status:</span> {task.status}</div>
                 <div className="task-detail"><span>Added By:</span> {task.userId?.firstName} ({task.userId?.email})</div>
                 <div className="task-detail"><span>Date:</span> {new Date(task.createdAt).toLocaleString()}</div>
               </div>

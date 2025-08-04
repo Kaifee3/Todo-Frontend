@@ -31,7 +31,7 @@ const Home = ({ user: passedUser }) => {
       const response = await axios.get(`${API_URL}/api/tasks/${user.email}`);
       setTasks(response.data.reverse());
     } catch (err) {
-      console.error(" Error fetching tasks:", err);
+      console.error("Error fetching tasks:", err);
     }
   };
 
@@ -40,14 +40,17 @@ const Home = ({ user: passedUser }) => {
       await axios.delete(`${API_URL}/api/tasks/${id}`);
       setTasks((prev) => prev.filter((task) => task._id !== id));
     } catch (err) {
-      console.error(" Error deleting task:", err);
+      console.error("Error deleting task:", err);
     }
   };
 
   const confirmTask = async (id) => {
     try {
-      await axios.put(`${API_URL}/api/tasks/${id}`, { status: "Confirmed" });
-      fetchTasks();
+      await axios.put(`${API_URL}/api/tasks/${id}`, {
+        status: "Confirmed",
+        isConfirmed: true, // ✅ mark as confirmed
+      });
+      setTasks((prev) => prev.filter((task) => task._id !== id)); // remove from view
     } catch (err) {
       console.error("Error confirming task:", err);
     }
@@ -93,6 +96,8 @@ const Home = ({ user: passedUser }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const visibleTasks = tasks.filter((task) => !task.isConfirmed); // ✅ show only unconfirmed tasks
+
   return (
     <div className="home-container">
       <div className="slideshow">
@@ -115,80 +120,59 @@ const Home = ({ user: passedUser }) => {
         </div>
       ) : (
         <>
-          <TaskForm
-            fetchTasks={fetchTasks}
-            user={user}
-            addTaskToList={addTaskToList}
-          />
+          <TaskForm fetchTasks={fetchTasks} user={user} addTaskToList={addTaskToList} />
 
           <div className="task-section">
             <h3>Your Tasks</h3>
-            {tasks.filter((task) => task.status !== "Confirmed").length === 0 ? (
+            {visibleTasks.length === 0 ? (
               <p>No tasks yet.</p>
             ) : (
               <ul className="task-list">
-                {tasks
-                  .filter((task) => task.status !== "Confirmed")
-                  .map((task) => (
-                    <li key={task._id} className="task-card">
-                      {editingTaskId === task._id ? (
-                        <>
-                          <input
-                            type="text"
-                            value={editedTitle}
-                            onChange={(e) => setEditedTitle(e.target.value)}
-                            className="edit-input"
-                            placeholder="Edit title"
-                          />
-                          <textarea
-                            value={editedDescription}
-                            onChange={(e) => setEditedDescription(e.target.value)}
-                            className="edit-textarea"
-                            placeholder="Edit description"
-                          ></textarea>
-                          <div className="task-buttons">
-                            <button
-                              onClick={() => saveEdit(task._id)}
-                              className="text-green-700"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={cancelEdit}
-                              className="text-gray-500"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <h4>{task.title}</h4>
-                          {task.description && <p>{task.description}</p>}
-                          <div className="task-buttons">
-                            <button
-                              onClick={() => startEditing(task)}
-                              className="text-blue-600"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => deleteTask(task._id)}
-                              className="text-red-600"
-                            >
-                              Delete
-                            </button>
-                            <button
-                              onClick={() => confirmTask(task._id)}
-                              className="text-green-700"
-                            >
-                              Confirm
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </li>
-                  ))}
+                {visibleTasks.map((task) => (
+                  <li key={task._id} className="task-card">
+                    {editingTaskId === task._id ? (
+                      <>
+                        <input
+                          type="text"
+                          value={editedTitle}
+                          onChange={(e) => setEditedTitle(e.target.value)}
+                          className="edit-input"
+                          placeholder="Edit title"
+                        />
+                        <textarea
+                          value={editedDescription}
+                          onChange={(e) => setEditedDescription(e.target.value)}
+                          className="edit-textarea"
+                          placeholder="Edit description"
+                        ></textarea>
+                        <div className="task-buttons">
+                          <button onClick={() => saveEdit(task._id)} className="text-green-700">
+                            Save
+                          </button>
+                          <button onClick={cancelEdit} className="text-gray-500">
+                            Cancel
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <h4>{task.title}</h4>
+                        {task.description && <p>{task.description}</p>}
+                        <div className="task-buttons">
+                          <button onClick={() => startEditing(task)} className="text-blue-600">
+                            Edit
+                          </button>
+                          <button onClick={() => deleteTask(task._id)} className="text-red-600">
+                            Delete
+                          </button>
+                          <button onClick={() => confirmTask(task._id)} className="text-green-700">
+                            Confirm
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </li>
+                ))}
               </ul>
             )}
           </div>
